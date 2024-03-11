@@ -7,18 +7,21 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
-  const byDateDesc = data?.focus.slice().sort((evtA, evtB) =>
-  new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-);
+  
+  const byDateDesc = data?.focus?.slice().sort((evtA, evtB) =>
+    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+  );
+
   const nextCard = () => {
-    setTimeout(
-      () => setIndex(index+1 < byDateDesc.length ? index + 1 : 0),
-      5000
-    );
+    if (byDateDesc && byDateDesc.length > 0) {
+      setIndex((prevIndex) => (prevIndex + 1 < byDateDesc.length ? prevIndex + 1 : 0));
+    }
   };
+
   useEffect(() => {
-    nextCard();
-  });
+    const intervalId = setInterval(nextCard, 5000);
+    return () => clearInterval(intervalId);
+  }, [byDateDesc]);
 
 
   return (
@@ -26,11 +29,11 @@ const Slider = () => {
       {byDateDesc?.map((event, idx) => (
         <>
           <div
-            key={event.title}
+            key={event.title+1}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
-          >
+          >{console.log(event.title+1)}
             <img src={event.cover} alt="forum" />
             <div className="SlideCard__descriptionContainer">
               <div className="SlideCard__description">
