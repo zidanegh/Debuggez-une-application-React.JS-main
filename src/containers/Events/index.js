@@ -28,12 +28,6 @@ const EventList = () => {
     setCurrentPage(1);
     setType(evtType);
   };
-  function checkChangedValue(event) {
-    const changedLi = event.target;
-    const changedText = changedLi.innerText;
-    console.log("Changed <li> element:", changedLi);
-    console.log("Changed text:", changedText);
-  }
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
@@ -47,7 +41,6 @@ const EventList = () => {
           <Select
             selection={Array.from(typeList)}
             onChange={(value) => {
-              checkChangedValue(value);
               value ? changeType(value) : changeType(null);
             }}
           />
