@@ -45,7 +45,7 @@ describe("When Events is created", () => {
         <Events />
       </DataProvider>
     );
-    await screen.findAllByText("avril");
+    expect(await screen.findAllByText("avril")).toHaveLength(2);
   });
   describe("and an error occured", () => {
     it("an error message is displayed", async () => {
